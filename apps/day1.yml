@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: day1-apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/pi-lab-day1.git
+    targetRevision: main
+    path: apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
