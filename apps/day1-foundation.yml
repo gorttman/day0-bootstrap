@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: day1-apps
+  name: day1-foundation
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/pi-lab-day1.git
+    repoURL: https://github.com/{{ git_org }}/day1-foundation.git
     targetRevision: main
     path: apps
   destination:

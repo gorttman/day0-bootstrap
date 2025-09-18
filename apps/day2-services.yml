@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: day0-bootstrap
+  name: day2-services
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com:gorttman/pi-lab-day0.git   # this repo itself
+    repoURL: https://github.com/{{ git_org }}/day2-services.git
     targetRevision: main
     path: apps
   destination:
