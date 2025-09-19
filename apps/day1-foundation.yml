@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/{{ git_org }}/day1-foundation.git
+    repoURL: https://github.com/gorttman/day1-foundation.git
     targetRevision: main
     path: apps
   destination:
