@@ -6,13 +6,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/gorttman/day2-services.git
-    targetRevision: main
+    repoURL: https://github.com/gorttman/day2-services
     path: apps
+    targetRevision: main
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
