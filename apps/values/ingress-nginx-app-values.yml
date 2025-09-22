@@ -1,0 +1,14 @@
+controller:
+  replicaCount: 1
+
+  service:
+    type: NodePort
+    nodePorts:
+      http: 32080
+      https: 32443
+
+  admissionWebhooks:
+    enabled: true
+
+defaultBackend:
+  enabled: false
