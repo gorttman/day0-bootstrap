@@ -1,15 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: fluent-bit
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   sources:
     - repoURL: https://fluent.github.io/helm-charts
       chart: fluent-bit
-      targetRevision: 0.47.10   # stable release
+      targetRevision: 0.46.8
       helm:
+        releaseName: fluent-bit
         valueFiles:
           - $values/apps/values/fluent-bit-values.yml
     - repoURL: https://github.com/gorttman/day0-bootstrap.git
@@ -22,6 +32,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
-
