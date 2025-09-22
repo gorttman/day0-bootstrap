@@ -1,0 +1,20 @@
+backend:
+  type: syslog
+  syslog:
+    host: syslog-ng.logging.svc.cluster.local
+    port: 514
+    mode: udp
+    format: rfc5424
+    tls: off
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+serviceMonitor:
+  enabled: false
+
