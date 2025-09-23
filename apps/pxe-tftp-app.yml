@@ -17,8 +17,8 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: tftp
-        image: atmoz/tftp:latest     #  use atmoz (works, public)
-        args: ["-L", "--verbose", "/srv/tftp"]
+        image: ghcr.io/panubo/tftp:latest   #  switch here
+        args: ["-L", "-a", "0.0.0.0:69", "-v", "-s", "/srv/tftp"]
         volumeMounts:
         - name: tftp-data
           mountPath: /srv/tftp
