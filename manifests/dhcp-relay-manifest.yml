@@ -20,23 +20,22 @@ spec:
           image: networkboot/dhcpd:latest
           securityContext:
             privileged: true
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cp /config/dhcpd.conf /data/dhcpd.conf && \
+              exec /entrypoint.sh
           volumeMounts:
+            - name: dhcpd-config
+              mountPath: /config
             - name: dhcpd-data
               mountPath: /data
       volumes:
+        - name: dhcpd-config
+          configMap:
+            name: dhcpd-config
         - name: dhcpd-data
-          emptyDir: {}   #  writable, no manual prep
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: dhcpd-bootstrap
-  namespace: infra
-data:
-  bootstrap.sh: |
-    #!/bin/sh
-    cp /config/dhcpd.conf /data/dhcpd.conf
-    exec /entrypoint.sh "$@"
+          emptyDir: {}   # writable, holds dhcpd.conf + dhcpd.leases
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -54,5 +53,5 @@ data:
       option routers 192.168.1.1;
       option domain-name-servers 192.168.1.1;
       filename "pxelinux.0";
-      next-server 192.168.1.10;
+      next-server 192.168.1.10;  #  TFTP server IP
     }
