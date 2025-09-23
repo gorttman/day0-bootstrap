@@ -29,7 +29,7 @@ spec:
               exec /usr/sbin/dhcpd -f -d \
                 -cf /data/dhcpd.conf \
                 -lf /data/dhcpd.leases \
-                eth0
+                end0
           volumeMounts:
             - name: dhcpd-config
               mountPath: /config
@@ -40,7 +40,7 @@ spec:
           configMap:
             name: dhcpd-config
         - name: dhcpd-data
-          emptyDir: {}   # or hostPath if you want leases to persist
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,10 +53,10 @@ data:
     max-lease-time 7200;
     authoritative;
 
-    subnet 192.168.1.0 netmask 255.255.255.0 {
-      range 192.168.1.100 192.168.1.200;
-      option routers 192.168.1.1;
-      option domain-name-servers 192.168.1.1;
+    subnet 192.168.2.0 netmask 255.255.255.0 {
+      range 192.168.2.100 192.168.2.200;
+      option routers 192.168.2.1;
+      option domain-name-servers 192.168.2.1;
       filename "pxelinux.0";
-      next-server 192.168.1.10;
+      next-server 192.168.2.10;
     }
