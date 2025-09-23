@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-relay
-          image: rancher/harvester-vm-dhcp-controller
+          image: rancher/harvester-vm-dhcp-controller:v1.6-head
           securityContext:
             privileged: true
           args:
