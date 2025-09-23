@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dhcp-relay
+  name: dhcp-server
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "3"
@@ -13,7 +13,7 @@ spec:
     path: manifests
     directory:
       recurse: true
-      include: dhcp-relay-manifest.yml
+      include: dhcp-server-manifest.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: infra
