@@ -1,0 +1,21 @@
+persistence:
+  enabled: true
+  storageClass: ""
+  size: 10Gi
+  # hostPath so the exports actually live on Pi-1's SSD
+  hostPath:
+    path: /srv/nfs
+    type: DirectoryOrCreate
+
+storageClass:
+  create: true
+  defaultClass: false
+  name: nfs
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
