@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-relay
-          image: openeuler/dhcp
+          image: homeassistant/aarch64-addon-dhcp_server:latest
           securityContext:
             privileged: true
           args:
