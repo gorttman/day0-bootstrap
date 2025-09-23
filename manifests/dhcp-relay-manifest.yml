@@ -17,16 +17,26 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-server
-          image: networkboot/dhcpd:latest   # still using your current choice
+          image: networkboot/dhcpd:latest
           securityContext:
             privileged: true
           volumeMounts:
             - name: dhcpd-data
-              mountPath: /data              #  this is what the image expects
+              mountPath: /data
       volumes:
         - name: dhcpd-data
-          configMap:
-            name: dhcpd-config
+          emptyDir: {}   #  writable, no manual prep
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dhcpd-bootstrap
+  namespace: infra
+data:
+  bootstrap.sh: |
+    #!/bin/sh
+    cp /config/dhcpd.conf /data/dhcpd.conf
+    exec /entrypoint.sh "$@"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -44,5 +54,5 @@ data:
       option routers 192.168.1.1;
       option domain-name-servers 192.168.1.1;
       filename "pxelinux.0";
-      next-server 192.168.1.10;  #  TFTP server IP
+      next-server 192.168.1.10;
     }
