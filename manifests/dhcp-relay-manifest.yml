@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-relay
-          image: 3x3cut0r/dhcrelay:latest   #  using 3x3cut0r
+          image: imschuler/oka-dhcpd
           securityContext:
             privileged: true
           args:
