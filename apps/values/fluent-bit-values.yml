@@ -1,6 +1,6 @@
 image:
   repository: cr.fluentbit.io/fluent/fluent-bit
-  tag: arm64                            
+  tag: 3.1.4                            
   pullPolicy: IfNotPresent
 
 service:
