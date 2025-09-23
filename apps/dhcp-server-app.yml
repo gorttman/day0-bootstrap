@@ -18,6 +18,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: infra
   syncPolicy:
-    automated:
-      prune: true
-    selfHeal: true
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
