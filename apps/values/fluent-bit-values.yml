@@ -1,20 +1,33 @@
-backend:
-  type: syslog
-  syslog:
-    host: syslog-ng.logging.svc.cluster.local
-    port: 514
-    mode: udp
-    format: rfc5424
-    tls: off
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 2020
+      targetPort: 2020
 
-resources:
-  requests:
-    cpu: 50m
-    memory: 64Mi
-  limits:
-    cpu: 200m
-    memory: 128Mi
+config:
+  service: |
+    [SERVICE]
+        Flush        1
+        Daemon       Off
+        Log_Level    info
+        Parsers_File parsers.conf
+        HTTP_Server  On
+        HTTP_Listen  0.0.0.0
+        HTTP_Port    2020
 
-serviceMonitor:
-  enabled: false
+  inputs: |
+    [INPUT]
+        Name              tail
+        Path              /var/log/containers/*.log
+        Parser            docker
+        Tag               kube.*
 
+  outputs: |
+    [OUTPUT]
+        Name              syslog
+        Match             kube.*
+        Host              syslog-ng.logging.svc.cluster.local
+        Port              514
+        Mode              udp
+        Syslog_Format     rfc5424
