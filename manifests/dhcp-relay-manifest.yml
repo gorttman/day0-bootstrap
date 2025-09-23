@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-relay
-          image: homeassistant/aarch64-addon-dhcp_server:latest
+          image: rancher/harvester-vm-dhcp-controller
           securityContext:
             privileged: true
           args:
