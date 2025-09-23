@@ -36,3 +36,11 @@ config:
         Port              514
         Mode              udp
         Syslog_Format     rfc5424
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
