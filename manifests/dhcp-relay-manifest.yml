@@ -1,29 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dhcp-relay
+  name: dhcp-server
   namespace: infra
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dhcp-relay
+      app: dhcp-server
   template:
     metadata:
       labels:
-        app: dhcp-relay
+        app: dhcp-server
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
-        - name: dhcp-relay
-          image: networkboot/dhcpd:latest
+        - name: dhcp-server
+          image: networkboot/dhcpd:latest   #  keep using the same image
           securityContext:
             privileged: true
-          args:
-            - "--no-pid"
-            - "--name"
-            - "eth0"           #  change if your Pi’s interface isn’t eth0
-            - "--server"
-            - "192.168.1.1"    #  replace with your upstream DHCP server IP
+          volumeMounts:
+            - name: dhcpd-conf
+              mountPath: /etc/dhcp
+      volumes:
+        - name: dhcpd-conf
+          configMap:
+            name: dhcpd-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dhcpd-config
+  namespace: infra
+data:
+  dhcpd.conf: |
+    default-lease-time 600;
+    max-lease-time 7200;
+    authoritative;
 
+    subnet 192.168.1.0 netmask 255.255.255.0 {
+      range 192.168.1.100 192.168.1.200;
+      option routers 192.168.1.1;
+      option domain-name-servers 192.168.1.1;
+      filename "pxelinux.0";
+      next-server 192.168.1.10;  #  TFTP server IP
+    }
