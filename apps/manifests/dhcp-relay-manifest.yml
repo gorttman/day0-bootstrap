@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dhcp-relay
+  namespace: infra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dhcp-relay
+  template:
+    metadata:
+      labels:
+        app: dhcp-relay
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: dhcp-relay
+        image: networkboot/dhcrelay:latest
+        securityContext:
+          privileged: true
+        args:
+          - "--no-pid"
+          - "--name"
+          - "eth0"           #  change if your NIC isn’t eth0
+          - "--server"
+          - "192.168.1.1"    #  replace with your upstream DHCP server IP
