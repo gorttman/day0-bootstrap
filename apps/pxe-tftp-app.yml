@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: tftp
-        image: ghcr.io/panubo/tftp:latest   #  switch here
+        image: pghalliday/tftp:latest   #  public Docker Hub image
         args: ["-L", "-a", "0.0.0.0:69", "-v", "-s", "/srv/tftp"]
         volumeMounts:
         - name: tftp-data
