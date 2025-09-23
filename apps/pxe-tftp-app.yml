@@ -1,23 +1,44 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: pxe-tftp
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
+  name: tftp-server
+  namespace: infra
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/gorttman/day0-bootstrap.git
-    targetRevision: main
-    path: manifests
-    directory:
-      recurse: true
-      include: pxe-tftp-manifest.yml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: infra
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tftp
+  template:
+    metadata:
+      labels:
+        app: tftp
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: tftp
+        image: atmoz/tftp:latest     #  use atmoz (works, public)
+        args: ["-L", "--verbose", "/srv/tftp"]
+        volumeMounts:
+        - name: tftp-data
+          mountPath: /srv/tftp
+      volumes:
+      - name: tftp-data
+        hostPath:
+          path: /srv/tftp
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tftp
+  namespace: infra
+spec:
+  type: ClusterIP
+  selector:
+    app: tftp
+  ports:
+  - name: tftp
+    port: 69
+    protocol: UDP
+    targetPort: 69
