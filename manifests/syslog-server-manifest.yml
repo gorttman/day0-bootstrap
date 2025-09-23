@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syslog-server
+  namespace: infra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syslog-server
+  template:
+    metadata:
+      labels:
+        app: syslog-server
+    spec:
+      hostNetwork: true                # listen on LAN
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: syslog-server
+          image: linuxserver/syslog-ng:latest
+          ports:
+            - name: syslog-udp
+              containerPort: 514
+              protocol: UDP
+            - name: syslog-tcp
+              containerPort: 514
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: syslog-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: syslog-config
+  namespace: infra
+data:
+  syslog-ng.conf: |
+    @version: 3.38
+    @include "scl.conf"
+
+    source s_network {
+      syslog(transport(udp) port(514));
+      syslog(transport(tcp) port(514));
+    };
+
+    # Drop everything to /dev/null (blackhole)
+    destination d_null {
+      file("/dev/null");
+    };
+
+    log { source(s_network); destination(d_null); };
