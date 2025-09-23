@@ -17,16 +17,16 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tftp
-          image: 3x3cut0r/tftpd-hpa:latest   #  replace this line with one of the tested images
+          image: 3x3cut0r/tftpd-hpa:latest   #  swap this line to test different images
           args: ["-L", "-v", "-s", "/srv/tftp"]
-        volumeMounts:
-        - name: tftp-data
-          mountPath: /srv/tftp
+          volumeMounts:
+            - name: tftp-data
+              mountPath: /srv/tftp
       volumes:
-      - name: tftp-data
-        hostPath:
-          path: /srv/tftp
-          type: DirectoryOrCreate
+        - name: tftp-data
+          hostPath:
+            path: /srv/tftp
+            type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +38,7 @@ spec:
   selector:
     app: tftp
   ports:
-  - name: tftp
-    port: 69
-    protocol: UDP
-    targetPort: 69
+    - name: tftp
+      port: 69
+      protocol: UDP
+      targetPort: 69
