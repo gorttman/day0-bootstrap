@@ -1,6 +1,6 @@
 image:
   repository: cr.fluentbit.io/fluent/fluent-bit
-  tag: 3.0.5-arm64        # swap to -arm64-64k if jemalloc crash
+  tag: 3.0.5-arm64-64k     # swap to -arm64-64k if jemalloc crash
 
 service:
   type: ClusterIP
