@@ -23,8 +23,10 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              cp /config/dhcpd.conf /data/dhcpd.conf && \
-              exec /entrypoint.sh
+              set -e
+              cp /config/dhcpd.conf /data/dhcpd.conf
+              [ -f /data/dhcpd.leases ] || touch /data/dhcpd.leases
+              exec /usr/sbin/dhcpd -f -d -cf /data/dhcpd.conf eth0
           volumeMounts:
             - name: dhcpd-config
               mountPath: /config
@@ -35,7 +37,7 @@ spec:
           configMap:
             name: dhcpd-config
         - name: dhcpd-data
-          emptyDir: {}   # writable, holds dhcpd.conf + dhcpd.leases
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,5 +55,5 @@ data:
       option routers 192.168.1.1;
       option domain-name-servers 192.168.1.1;
       filename "pxelinux.0";
-      next-server 192.168.1.10;  #  TFTP server IP
+      next-server 192.168.1.10;  # TFTP server IP
     }
