@@ -25,8 +25,11 @@ spec:
             - |
               set -e
               cp /config/dhcpd.conf /data/dhcpd.conf
-              [ -f /data/dhcpd.leases ] || touch /data/dhcpd.leases
-              exec /usr/sbin/dhcpd -f -d -cf /data/dhcpd.conf eth0
+              touch /data/dhcpd.leases
+              exec /usr/sbin/dhcpd -f -d \
+                -cf /data/dhcpd.conf \
+                -lf /data/dhcpd.leases \
+                eth0
           volumeMounts:
             - name: dhcpd-config
               mountPath: /config
@@ -37,7 +40,7 @@ spec:
           configMap:
             name: dhcpd-config
         - name: dhcpd-data
-          emptyDir: {}
+          emptyDir: {}   # or hostPath if you want leases to persist
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -55,5 +58,5 @@ data:
       option routers 192.168.1.1;
       option domain-name-servers 192.168.1.1;
       filename "pxelinux.0";
-      next-server 192.168.1.10;  # TFTP server IP
+      next-server 192.168.1.10;
     }
