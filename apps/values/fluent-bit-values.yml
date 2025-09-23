@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/gorttman/fluent-bit   
+  repository: cr.fluentbit.io/fluent/fluent-bit
   tag: arm64-64k                            # <-- tag you push
   pullPolicy: IfNotPresent
 
