@@ -17,8 +17,8 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: tftp
-        image: linuxserver/tftp:latest
-        args: ["-L", "-a", "0.0.0.0:69", "-v", "-s", "/srv/tftp"]
+        image: networkboot/tftp-hpa:latest   #  ARM64-capable
+        args: ["-L", "--verbose", "-s", "/srv/tftp"]
         volumeMounts:
         - name: tftp-data
           mountPath: /srv/tftp
