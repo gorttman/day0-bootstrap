@@ -17,14 +17,14 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-server
-          image: networkboot/dhcpd:latest   #  keep using the same image
+          image: networkboot/dhcpd:latest   # still using your current choice
           securityContext:
             privileged: true
           volumeMounts:
-            - name: dhcpd-conf
-              mountPath: /etc/dhcp
+            - name: dhcpd-data
+              mountPath: /data              #  this is what the image expects
       volumes:
-        - name: dhcpd-conf
+        - name: dhcpd-data
           configMap:
             name: dhcpd-config
 ---
