@@ -26,10 +26,12 @@ spec:
               set -e
               cp /config/dhcpd.conf /data/dhcpd.conf
               touch /data/dhcpd.leases
+              IFACE=$(ip -4 route show default | awk '{print $5}')
+              echo "Starting dhcpd on interface: $IFACE"
               exec /usr/sbin/dhcpd -f -d \
                 -cf /data/dhcpd.conf \
                 -lf /data/dhcpd.leases \
-                end0
+                $IFACE
           volumeMounts:
             - name: dhcpd-config
               mountPath: /config
