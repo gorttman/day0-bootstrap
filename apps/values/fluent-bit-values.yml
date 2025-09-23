@@ -1,3 +1,8 @@
+image:
+  repository: cr.fluentbit.io/fluent/fluent-bit
+  tag: 3.0.5-arm64        #  adjust for Pi kernel page size
+  pullPolicy: IfNotPresent
+
 service:
   type: ClusterIP
   ports:
