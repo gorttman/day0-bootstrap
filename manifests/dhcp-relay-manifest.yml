@@ -17,12 +17,13 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: dhcp-relay
-          image: networkboot/dhcrelay:latest   #  Debian-based, often multi-arch
+          image: 3x3cut0r/dhcrelay:latest   #  using 3x3cut0r
           securityContext:
             privileged: true
           args:
             - "--no-pid"
             - "--name"
-            - "eth0"           #  change if your Pi’s NIC is not eth0
+            - "eth0"           #  change if your Pi’s interface isn’t eth0
             - "--server"
-            - "192.168.1.1"    #  replace with your actual DHCP server IP
+            - "192.168.1.1"    #  replace with your upstream DHCP server IP
+
