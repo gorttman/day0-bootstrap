@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sealed-secrets
+  name: day0-bootstrap
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/gorttman/day0-bootstrap.git
     targetRevision: main
-    path: apps/sealed-secrets
+    path: apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
