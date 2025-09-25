@@ -1,0 +1,21 @@
+# day1-foundation/apps/values/ingress-nginx-values.yml
+
+controller:
+  replicaCount: 1
+
+  service:
+    type: NodePort   # or LoadBalancer if you have cloud/MetalLB
+    nodePorts:
+      http: 30080
+      https: 30443
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+  admissionWebhooks:
+    enabled: true
+
+defaultBackend:
+  enabled: true
