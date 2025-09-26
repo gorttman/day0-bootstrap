@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - sealed-secrets/sealed-secrets-app.yml
+  - cert-manager/cert-manager-namespace.yml
   - cert-manager/cert-manager-app.yml
   - ingress-nginx/ingress-nginx-app.yml
