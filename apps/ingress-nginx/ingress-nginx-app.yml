@@ -15,7 +15,7 @@ spec:
           - $values/apps/ingress-nginx/ingress-nginx-values.yml
 
     # Git repo containing the values file
-    - repoURL: https://github.com/gorttman/day0-foundation.git
+    - repoURL: https://github.com/gorttman/day0-bootstrap.git
       targetRevision: main
       ref: values
 
