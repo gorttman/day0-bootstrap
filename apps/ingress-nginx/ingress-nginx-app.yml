@@ -12,7 +12,7 @@ spec:
       targetRevision: 4.11.2
       helm:
         valueFiles:
-          - $values/apps/values/ingress-nginx-values.yml
+          - $values/apps/ingress-nginx-values.yml
 
     # Git repo containing the values file
     - repoURL: https://github.com/gorttman/day1-foundation.git
