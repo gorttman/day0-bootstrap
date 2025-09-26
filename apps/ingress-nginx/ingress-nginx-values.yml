@@ -6,8 +6,8 @@ controller:
   service:
     type: NodePort   # or LoadBalancer if you have cloud/MetalLB
     nodePorts:
-      http: 30080
-      https: 30443
+      http: 31080
+      https: 31443
 
   metrics:
     enabled: true
