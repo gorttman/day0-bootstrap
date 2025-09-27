@@ -2,6 +2,11 @@
 
 controller:
   replicaCount: 1
+  image:
+     registry: registry.k8s.io
+     image: ingress-nginx/controller
+     tag: "v1.11.2"   # <- choose a tag that supports arm64
+     digest: ""       # leave empty if you’re specifying tag
 
   service:
     type: NodePort   # or LoadBalancer if you have cloud/MetalLB
