@@ -24,8 +24,4 @@ controller:
 
 # ✅ Fix for Raspberry Pi (ARM64) default backend
 defaultBackend:
-  enabled: true
-  image:
-    registry: quay.io
-    image: kubernetes-ingress-controller/defaultbackend
-    tag: "1.5"
+  enabled: false
