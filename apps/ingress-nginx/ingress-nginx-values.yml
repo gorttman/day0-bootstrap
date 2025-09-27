@@ -26,6 +26,6 @@ controller:
 defaultBackend:
   enabled: true
   image:
-    registry: registry.k8s.io
-    image: defaultbackend
-    tag: "1.5"   # multi-arch build (NOT defaultbackend-amd64)
+    registry: gcr.io
+    image: kubernetes-ingress-images/defaultbackend
+    tag: "1.5"
