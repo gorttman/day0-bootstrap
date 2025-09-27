@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/gorttman/day0-bootstrap.git
     targetRevision: main
-    path: day0/apps/coredns
+    path: apps/coredns
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
