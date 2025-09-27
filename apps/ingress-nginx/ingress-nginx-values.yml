@@ -1,26 +1,31 @@
+# apps/ingress-nginx/ingress-nginx-values.yml
+
 controller:
+  replicaCount: 1
   image:
     registry: registry.k8s.io
     image: ingress-nginx/controller
-    tag: "v1.11.2"
-
-  # Run as DaemonSet so every node can accept traffic
-  kind: DaemonSet
-
-  # Bind directly to host ports (no NodePort conflicts)
-  hostPort:
-    enabled: true
+    tag: "v1.11.2"   # controller image version (multi-arch)
+    digest: ""       # leave empty if specifying tag
 
   service:
-    type: ClusterIP
-
-  # Ensure Helm doesn’t override the entrypoint
-  command: []
+    type: NodePort   # use NodePort on bare metal; change to LoadBalancer if MetalLB later
+    nodePorts:
+      http: 31080
+      https: 31443
 
   metrics:
     enabled: true
     serviceMonitor:
-      enabled: false
+      enabled: false   # avoid needing Prometheus CRDs
 
+  admissionWebhooks:
+    enabled: true
+
+# ✅ Fix for Raspberry Pi (ARM64) default backend
 defaultBackend:
   enabled: true
+  image:
+    registry: registry.k8s.io
+    image: defaultbackend
+    tag: "1.5"   # multi-arch build (NOT defaultbackend-amd64)
