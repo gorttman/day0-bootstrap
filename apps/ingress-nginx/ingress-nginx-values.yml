@@ -1,26 +1,26 @@
-# day1-foundation/apps/values/ingress-nginx-values.yml
-
 controller:
-  replicaCount: 1
   image:
-     registry: registry.k8s.io
-     image: ingress-nginx/controller
-     tag: "v1.11.2"   # <- choose a tag that supports arm64
-     digest: ""       # leave empty if you’re specifying tag
+    registry: registry.k8s.io
+    image: ingress-nginx/controller
+    tag: "v1.11.2"
+
+  # Run as DaemonSet so every node can accept traffic
+  kind: DaemonSet
+
+  # Bind directly to host ports (no NodePort conflicts)
+  hostPort:
+    enabled: true
 
   service:
-    type: NodePort   # or LoadBalancer if you have cloud/MetalLB
-    nodePorts:
-      http: 31080
-      https: 31443
+    type: ClusterIP
+
+  # Ensure Helm doesn’t override the entrypoint
+  command: []
 
   metrics:
     enabled: true
     serviceMonitor:
       enabled: false
-
-  admissionWebhooks:
-    enabled: true
 
 defaultBackend:
   enabled: true
