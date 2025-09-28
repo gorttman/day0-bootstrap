@@ -6,7 +6,7 @@ namespace: kube-system
 configMapGenerator:
   - name: coredns
     files:
-      - Corefile=corefile.main
+      - Corefile=Corefile.main
       - fallback.case
 generatorOptions:
   disableNameSuffixHash: true
