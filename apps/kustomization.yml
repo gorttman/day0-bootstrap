@@ -8,3 +8,4 @@ resources:
   - ingress-nginx/ingress-nginx-namespace.yml
   - ingress-nginx/ingress-nginx-app.yml
   - coredns/coredns-app.yml
+  - day1-foundation/day1-foundation-app.yml
