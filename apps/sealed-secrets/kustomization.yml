@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - sealed-secrets-app.yml
   - sealed-secrets-values.yml
+  - sealed-secrets-backup-pvc.yml
+  - sealed-secrets-backup-cron.yml
