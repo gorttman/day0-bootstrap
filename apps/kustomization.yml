@@ -7,4 +7,3 @@ resources:
   - ingress-nginx/ingress-nginx-namespace.yml
   - ingress-nginx/ingress-nginx-app.yml
   - coredns/coredns-app.yml
-  - sealed-secrets
