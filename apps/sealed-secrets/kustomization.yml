@@ -3,6 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - sealed-secrets-app.yml
+  # Official Bitnami controller manifest (pinned version)
+  - https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/controller.yaml
+
+  # Local manifests
   - sealed-secrets-rbac.yml
   - sealed-secrets-cron.yml
