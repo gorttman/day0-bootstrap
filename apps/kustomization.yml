@@ -7,4 +7,4 @@ resources:
   - ingress-nginx/ingress-nginx-app.yml
   - sealed-secrets/sealed-secrets-app.yml
   - day1-foundation/day1-foundation-app.yml
-  # - day2-services/day2-services-app.yml
+  - day2-services/day2-services-app.yml
