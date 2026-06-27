@@ -12,3 +12,4 @@ resources:
   - argocd/argocd-cmd-params-cm.yml
   - pihole/pihole-ingress.yml
   - novnc/novnc-ingress.yml
+  - dns-config/dns-config-app.yml
