@@ -10,3 +10,5 @@ resources:
   - day2-services/day2-services-app.yml
   - argocd/argocd-ingress.yml
   - argocd/argocd-cmd-params-cm.yml
+  - pihole/pihole-ingress.yml
+  - novnc/novnc-ingress.yml
