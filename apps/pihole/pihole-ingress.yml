@@ -3,8 +3,14 @@ kind: Ingress
 metadata:
   name: pihole
   namespace: pihole
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: traefik
+  tls:
+  - hosts:
+    - pihole.i3sec.com.au
+    secretName: pihole-tls
   rules:
     - host: pihole.i3sec.com.au
       http:

@@ -3,8 +3,14 @@ kind: Ingress
 metadata:
   name: novnc
   namespace: remote-access
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: traefik
+  tls:
+  - hosts:
+    - novnc.i3sec.com.au
+    secretName: novnc-tls
   rules:
     - host: novnc.i3sec.com.au
       http:
