@@ -4,7 +4,7 @@ metadata:
   name: novnc
   namespace: remote-access
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "private-ca"
 spec:
   ingressClassName: traefik
   tls:
