@@ -11,7 +11,5 @@ resources:
   - traefik/traefik-config.yml
   - argocd/argocd-ingress.yml
   - argocd/argocd-cmd-params-cm.yml
-  - pihole/pihole-ingress.yml
-  - novnc/novnc-ingress.yml
   - dns-config/dns-config-app.yml
   - dns-config/coredns-config-app.yml
