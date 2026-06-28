@@ -14,3 +14,4 @@ resources:
   - pihole/pihole-ingress.yml
   - novnc/novnc-ingress.yml
   - dns-config/dns-config-app.yml
+  - dns-config/coredns-config-app.yml
